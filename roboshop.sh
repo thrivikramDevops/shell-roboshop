@@ -12,13 +12,11 @@ for instance in $@
     do
     INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t3.micro --security-group-ids $SG_ID --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=$instance}]' --query 'Instances[0].PrivateIpAddress' --output text)
     if [ $instance != "frontend" ]; then
-        echo "Instance $instance is created with Private IP: $INSTANCE_ID"
-        IP_ADDRESS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$instance" --query 'Reservations[].Instances[].PrivateIpAddress' --output text)
-        echo -e "Instance $instance is created with Private IP $R $IP_ADDRESS $N"
+             IP_ADDRESS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$instance" --query 'Reservations[].Instances[].PrivateIpAddress' --output text)
+            echo -e "Instance $instance is created with Private IP $R $IP_ADDRESS $N"
     else
-        echo "Instance $instance is created with Public IP: $INSTANCE_ID"
-        IP_ADDRESS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$instance" --query 'Reservations[].Instances[].PublicIpAddress' --output text)
-        echo -e "Instance $instance is created with Public IP $R $IP_ADDRESS $N"
+             IP_ADDRESS=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$instance" --query 'Reservations[].Instances[].PublicIpAddress' --output text)
+            echo -e "Instance $instance is created with Public IP $R $IP_ADDRESS $N"
     fi
     echo "----------------------------------------------"
     echo "$instance $IP_ADDRESS" 
